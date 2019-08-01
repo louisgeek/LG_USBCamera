@@ -1,5 +1,9 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven'
+//maven的升级版
+//apply plugin: 'maen-publish'
+//和 maven uploadArchives 冲突
+//apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.louisgeek'
 android {
 
@@ -27,6 +31,38 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
     testImplementation 'junit:junit:4.12'
 }
+
+
+//=======  uploadArchives  start  =======
+uploadArchives {
+    configuration = configurations.archives
+    repositories {
+        mavenDeployer {
+            repository(url: 'http://127.0.0.1:8088/repository/maven-releases/') {
+                authentication(userName: 'admin', password: 'admin')
+            }
+            pom.project {
+//                    name 'testMavenName'
+                version '1.0.2'
+                artifactId 'USBCamera'
+                groupId 'com.github.louisgeek'
+                packaging 'aar'
+                description 'update lib version'
+            }
+        }
+    }
+}
+// 生成sources.jar  写 artifacts ｛｝ 之前
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+artifacts {
+    //编译的源码类型
+    archives androidSourcesJar
+    //archives androidJavadocsJar
+}
+//  ======= uploadArchives  end   =======
