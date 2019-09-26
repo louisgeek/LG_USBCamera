@@ -41,6 +41,7 @@ public class Main2Activity extends AppCompatActivity {
                 gl10.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
             }
 
+            
             @Override
             public void onSurfaceChanged(GL10 gl10, int w, int h) {
                 gl10.glViewport(0, 0, w, h);
