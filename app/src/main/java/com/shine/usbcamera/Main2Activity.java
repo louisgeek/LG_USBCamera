@@ -21,6 +21,7 @@ import javax.microedition.khronos.opengles.GL10;
 public class Main2Activity extends AppCompatActivity {
     private static final String TAG = "Main2Activity";
 
+    
     private USBMonitor mUSBMonitor;
     private UVCCamera mUVCCamera;
     private GLSurfaceView mPreviewSurfaceView;
